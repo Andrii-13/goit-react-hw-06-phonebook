@@ -53,12 +53,12 @@ export class App extends Component {
     }));
   };
 
-  // findContact = () => {
-  //   const filterContact = this.state.contacts.filter(({ name }) => {
-  //     return name.includes(this.state.filter);
-  //   });
-  //   return filterContact;
-  // };
+  findContact = () => {
+    const filterContact = this.state.contacts.filter(({ name }) => {
+      return name.includes(this.state.filter);
+    });
+    return filterContact;
+  };
 
   render() {
     return (
