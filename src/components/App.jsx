@@ -35,7 +35,7 @@ export class App extends Component {
   };
 
   componentDidMount = () => {
-    const contactsFromLS = JSON.parse(localStorage.getItem('contacts' || []));
+    const contactsFromLS = JSON.parse(localStorage.getItem('contacts') )|| [];
     this.setState({
       contacts: contactsFromLS,
     });
@@ -66,7 +66,6 @@ export class App extends Component {
     const filterContact = this.state.contacts.filter(({ name }) => {
       return name.includes(this.state.filter);
     });
-    console.log(filterContact);
     return filterContact;
   };
 
