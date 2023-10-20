@@ -1,59 +1,61 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { Form } from './ContactForm.styled';
 import { nanoid } from 'nanoid';
 
-export class ContactForm extends Component {
-  state = { name: '', number: '' };
+export const ContactForm = ({ onSubmitForm }) => {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
 
-  submitForm = e => {
-    e.preventDefault();   
-    this.props.onSubmitForm(this.state);
-    this.reset();
+  const submitForm = e => {
+    e.preventDefault();
+    onSubmitForm({'name':name, 'number': number});
+    setName('');
+    setNumber('');
   };
 
-  reset = () => {
-    this.setState({ name: '', number: '' });
+  const changeInput = input => {
+    switch (input.name) {
+      case 'name':
+        setName(input.value);
+        break;
+      case 'number':
+        setNumber(input.value);
+        break;
+      default:
+    }
   };
 
-  changeInput = input => {
-    this.setState({
-      [input.name]: input.value,
-    });
-  };
-  // генеруємо ID для інпутів форми, для декількох форм на сторінці
-  nameIinputIid = nanoid(5);
-  numberInputIid = nanoid(5);
+  const inputNameId = nanoid(5);
+  const inputNamberId =  nanoid(5);
 
-  render() {
-    return (
-      <Form onSubmit={this.submitForm}>
-        <label htmlFor={this.nameIinputIid}>Name</label>
-        <input
-          type="text"
-          id={this.nameIinputIid}
-          name="name"
-          placeholder="Enter name ..."
-          // колбек потрібен щоб передати інфу, інашке ми її викличемо і на onChange прилетить виконання функції, а нам потрибно щоб запустилась
-          onChange={e => {
-            return this.changeInput(e.target);
-          }}
-          value={this.state.name}
-          required
-        />
-        <label htmlFor={this.numberInputIid}>Number</label>
-        <input
-          type="tel"
-          name="number"
-          id={this.numberInputIid}
-          placeholder="tel: xxx-xx-xx"
-          onChange={e => {
-            return this.changeInput(e.target);
-          }}
-          value={this.state.number}
-          required
-        />
-        <button type="submit">Add contact</button>
-      </Form>
-    );
-  }
-}
+   return (
+    <Form onSubmit={submitForm}>
+      <label htmlFor={inputNameId}>Name</label>
+      <input
+        type="text"
+        id={inputNameId}
+        name="name"
+        placeholder="Enter name ..."
+        // колбек потрібен щоб передати інфу, інашке ми її викличемо і на onChange прилетить виконання функції, а нам потрибно щоб запустилась
+        onChange={e => {
+          return changeInput(e.target);
+        }}
+        value={name}
+        required
+      />
+      <label htmlFor={inputNamberId}>Number</label>
+      <input
+        type="tel"
+        name="number"
+        id={inputNamberId}
+        placeholder="tel: xxx-xx-xx"
+        onChange={e => {
+          return changeInput(e.target);
+        }}
+        value={number}
+        required
+      />
+      <button type="submit">Add contact</button>
+    </Form>
+  );
+};
