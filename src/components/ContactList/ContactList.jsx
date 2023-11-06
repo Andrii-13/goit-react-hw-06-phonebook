@@ -4,6 +4,7 @@ import {deleteContact} from 'redux/contactSlice';
 
 export const ContactList = () => {
   const contacts = useSelector(state => state.contacts.contacts);
+  const filterContacts = useSelector(state => state.contacts.filter);
   const dispatch = useDispatch();
 
   const onDeleteContact = contactId => {
@@ -11,10 +12,17 @@ export const ContactList = () => {
     dispatch(deleteContact(remainingContacts))
   };
 
+const findContact = () => {
+    const filterContact = contacts.filter(({ name }) => {
+      return name.includes(filterContacts);
+    });
+    return filterContact;
+  };
+
   return (
     <List>
       {[
-        contacts.map(({ id, name, number }) => {
+        findContact().map(({ id, name, number }) => {
           return (
             <li key={id}>
               {name}: {number}

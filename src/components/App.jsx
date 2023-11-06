@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect} from 'react';
 import { TitlePhonebook } from './TitlePhonebook/TitlePhonebook';
 import { TitleContacts } from './TitleContacts/TitleContacts';
 import { Application } from './App.styled';
@@ -10,31 +10,31 @@ import { useSelector} from 'react-redux';
 export const App = () => {
   const contacts = useSelector(state => state.contacts.contacts)
 
-  const [filter, setFilter] = useState('');
+  // const [filter, setFilter] = useState('');
 
   useEffect(() => {   
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
 
-  const changeInput = input => {
-    setFilter(input.value);
-  };
+  // const changeInput = input => {
+  //   setFilter(input.value);
+  // };
 
-  const findContact = () => {
-    const filterContact = contacts.filter(({ name }) => {
-      return name.includes(filter);
-    });
-    return filterContact;
-  };
+  // const findContact = () => {
+  //   const filterContact = contacts.filter(({ name }) => {
+  //     return name.includes(filter);
+  //   });
+  //   return filterContact;
+  // };
 
   return (
     <Application>
       <TitlePhonebook title="Phonebook" />
       <ContactForm  />
       <TitleContacts title="Contacts" />
-      <Filter onChangeInput={changeInput} inputFilter={filter} />
+      <Filter/>
       <ContactList        
-        onfindContact={findContact}
+        // onfindContact={findContact}
       />
     </Application>
   );
